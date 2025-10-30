@@ -2,7 +2,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Navigation } from "@/components/Navigation";
@@ -37,7 +37,8 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <BrowserRouter>
+        {/* Use HashRouter so client-side routing works when the app is served from a subpath (e.g. GitHub Pages) */}
+        <HashRouter>
           <Navigation isAuthenticated={isAuthenticated} />
           <Routes>
             <Route path="/" element={<Landing />} />
@@ -49,7 +50,7 @@ const App = () => {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
-        </BrowserRouter>
+        </HashRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );
